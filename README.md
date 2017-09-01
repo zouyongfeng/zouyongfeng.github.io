@@ -1,24 +1,47 @@
-#Clean Blog by Start Bootstrap - Jekyll Version
+### 博客地址
 
-The official Jekyll version of the Clean Blog theme by [Start Bootstrap](http://startbootstrap.com/).
+Github托管的是以前Jekyll版本的源码，现在博客用Hexo重新搭建
+#### 预览
 
-###[View Live Demo &rarr;](http://blackrockdigital.github.io/startbootstrap-clean-blog-jekyll/)
+* Jekyll版本：EZLippi.github.io
+* Hexo 版本： [www.ezlippi.com](http://www.ezlippi.com)
+* Hexo版本源码：[https://coding.net/u/ezlippi/p/ezlippi/git/tree/coding-pages/](https://coding.net/u/ezlippi/p/ezlippi/git/tree/coding-pages/)
 
-## Before You Begin
+### 使用Jekyll版本作为博客模板，仅需如下几步：
 
-In the _config.yml file, the base URL is set to /startbootstrap-clean-blog-jekyll which is this themes gh-pages preview. It's recommended that you remove the base URL before working with this theme locally!
+1. 首先Fork或Download一份本项目代码。 
+2. 修改_config.yaml及about.md文件，以变更个人信息。 
+3. 修改_include目录下相关文件，以配置网站统计(analytics.html)，网友评论(comment.html)，右侧栏目(categories.html),热门文章(hot.html),友情链接(links.html)等。 
+4. 修改CNAME文件，以绑定自己的域名。 
+5. 删除_posts下文章，换成你自己的。 
+6. 去谷歌自定义搜索新建一个你的搜索引擎，把你的Id替换根目录下search.html我的ID
+7. 最后，push到你自己的博客Repo~ 
 
-It should look like this:
-`baseurl: ""`
+ *^_^*如果愿意，Star本项目一个吧~ 
 
-## What's Included
+### 本项目使用了
 
-A full Jekyll environment is included with this theme. If you have Jekyll installed, simply run `jekyll serve` in your command line and preview the build in your browser. You can use `jekyll serve --watch` to watch for changes in the source files as well.
+1. CNZZ的网站统计服务，官网：http://cnzz.com 
+2. 多说的评论功能，官网:http://duoshuo.com/
 
-A Grunt environment is also included. There are a number of tasks it performs like minification of the JavaScript, compiling of the LESS files, adding banners to apply the MIT license, and watching for changes. Run the grunt default task by entering `grunt` into your command line which will build the files. You can use `grunt watch` if you are working on the JavaScript or the LESS.
+### 联系方式
 
-You can run `jekyll serve --watch` and `grunt watch` at the same time to watch for changes and then build them all at once.
+联系方式： Email(ouyanglip@gmail.com) 
 
-## Support
 
-Visit Clean Blog's template overview page on Start Bootstrap at http://startbootstrap.com/template-overviews/clean-blog/ and leave a comment, email feedback@startbootstrap.com, or open an issue here on GitHub for support.
+### 使用本项目作模板的博客链接
+
+* http://www.94geek.com  
+* http://www.haidaoxiaofei.me  
+* http://www.malphi.net  
+* http://happyaround.com  
+* http://tencentlocation.github.io  
+* http://wtaps.github.io 
+* http://maoshu.cc
+* http://x-carto.com/
+* http://flypeom.site
+
+## 2016-02-25更新
+
+* 本博客由Jekyl迁移到Hexo,博客地址[ezlippi](www.ezlippi.com),源码托管在了国内的[Coding.net](https://coding.net/u/ezlippi/p/ezlippi/git/tree/coding-pages/)
+* 使用Hexo搭建个人博客具体教程参考[Jekyll迁移到Hexo建立个人博客](http://www.ezlippi.com/blog/2016/02/jekyll-to-hexo.html)
