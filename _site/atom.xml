@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>returnzyf</title>
+ <link href="http://http://coolshell.info/atom.xml" rel="self"/>
+ <link href="http://http://coolshell.info"/>
+ <updated>2017-09-01T23:53:55+08:00</updated>
+ <author>
+   <name>zyf</name>
+   <email>zouyfgo@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>利用layer的mask属性实现app半透明引导蒙层</title>
+   <link href="http://http://coolshell.info/blog/2017/07/%E5%88%A9%E7%94%A8layer%E7%9A%84mask%E5%B1%9E%E6%80%A7%E5%AE%9E%E7%8E%B0APP%E5%8D%8A%E9%80%8F%E6%98%8E%E5%BC%95%E5%AF%BC%E8%92%99%E5%B1%82.html"/>
+   <updated>2017-07-15T00:00:00+08:00</updated>
+   <id>/blog/2017/07/利用layer的mask属性实现APP半透明引导蒙层</id>
+   <content type="html">
+&lt;p&gt;###如今APP中新版本都会有些半透明蒙层引导，例如下面这种的。
+&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/680706-1fa3290e94d34533.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;屏幕快照 2017-07-07 上午11.32.51.png&quot; /&gt;
+###之前我都是用一张图片覆盖到相应的位置来完成需求，还要考虑不同屏幕的图片拉伸，而且图片上的内容固定，很不灵活。后来采用layer的mask属性来让需要显示的地方透明，完美的实现这些需求。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;mask属性按照我的理解就是显示maskLayer与父layer非透明部分的交集，所以中间的没有path的透明部分就不显示了。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;代码实现，self就是占整个屏幕的黑色蒙层，这里的bezierPathByReversingPath可以生成反向的path，frame是需要透明显示的位置&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;UIBezierPath *path = [UIBezierPath bezierPathWithRect:kScreen_BOUNDS];
+[path appendPath: [[UIBezierPath bezierPathWithRoundedRect:frame cornerRadius:4] bezierPathByReversingPath]];
+CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+shapeLayer.path = path.CGPath;
+self.layer.mask = shapeLayer;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</content>
+ </entry>
+ 
+ 
+</feed>
