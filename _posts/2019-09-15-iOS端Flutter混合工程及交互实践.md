@@ -1,5 +1,3 @@
-[TOC]
-
 ###混合工程搭建
 为了项目可以支持Flutter和Native混合开发的模式，我们需要在对原生项目无侵入的条件下接入flutter，原生项目直接依赖flutter项目产物，如下图所示：
 ![TB1OqY3Ff1TBuNjy0FjXXajyXXa-1279-1125.png](https://upload-images.jianshu.io/upload_images/680706-09ed7848ca4d3a95.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
