@@ -1,7 +1,7 @@
-##导读
+## 导读
 >现在有很多APP的tabbar上的图标在做活动时，都是在可以在服务器获取数据的，我们平常下载图片都是用的sdwebimage等第三方库，但是里面没有对于tabbaritem的下载图片的方法。不自定义tabbar的话，只能自己给tabbaritem写个从网络获取图片的功能了。
 
-####实现方案
+#### 实现方案
 1.按照sdwebimage的设计思路，需要给tabbaritem写一个UITabBarItem+WebCache的分类，拓展2个下载图片的方法(选中和非选中)。
 
 - (void)zy_setImageWithURL:(NSString *)urlString withImage:(UIImage *)placeholderImage
