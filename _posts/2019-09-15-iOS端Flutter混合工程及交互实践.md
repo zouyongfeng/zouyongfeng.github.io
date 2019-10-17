@@ -1,9 +1,8 @@
-##iOS端Flutter混合工程及交互实践
+[TOC]
 
 ###混合工程搭建
 为了项目可以支持Flutter和Native混合开发的模式，我们需要在对原生项目无侵入的条件下接入flutter，原生项目直接依赖flutter项目产物，如下图所示：
-
-![](https://user-gold-cdn.xitu.io/2019/10/17/16dd84022912585b?w=1279&h=1125&f=png&s=169332)
+![TB1OqY3Ff1TBuNjy0FjXXajyXXa-1279-1125.png](https://upload-images.jianshu.io/upload_images/680706-09ed7848ca4d3a95.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ------------------
 ####Flutter官方文档提供的混合方案
 #####1.创建Flutter工程
@@ -53,8 +52,8 @@ eval(File.read(File.join(flutter_application_path, '.ios', 'Flutter', 'podhelper
 这部分我们需要实现获取 Flutter 工程 release 产物，并集成到 Native 项目，并保留可以依赖本地 Flutter 工程的能力。
 在原生项目中加入`flutterhelper.rb`脚本，分为如下几个步骤：
 - 获取 Flutter 工程产物
-   - 获取 release 产物`install_release_flutter_app`:clone远程仓库中的Flutter产物到本地
-   - 获取 debug 产物`install_debug_flutter_app`：在 Flutter工程路径下，执行 build_ios.sh -m debug 进行打包，然后得到 debug 产物目录
+- 获取 release 产物`install_release_flutter_app`:clone远程仓库中的Flutter产物到本地
+- 获取 debug 产物`install_debug_flutter_app`：在 Flutter工程路径下，执行 build_ios.sh -m debug 进行打包，然后得到 debug 产物目录
 - 通过 pod 引入 Flutter 工程产物`install_release_flutter_app_pod`:遍历Flutter产物目录，使用`pod sub, :path=>sub_abs_path`依赖Flutter.FrameWork、Native插件等
 
 `podfile`中配置如下：
@@ -77,11 +76,11 @@ eval(File.read(File.join(__dir__, 'flutterhelper.rb')), binding)
 ```
 cd ${WORKSPACE}
 if [[ ! -d "${FLUTTER_PROJECT_Name}" ]]; then
-  git clone ${FLUTTER_PROJECT_GIT_REPO} ${FLUTTER_PROJECT_Name} -b ${PROJECT_GIT_BRANCH}
+git clone ${FLUTTER_PROJECT_GIT_REPO} ${FLUTTER_PROJECT_Name} -b ${PROJECT_GIT_BRANCH}
 fi
 
 if [[ ! -d "${FLUTTER_PRODUCT_Name}" ]]; then
-  git clone ${FLUTTER_PRODUCT_GIT_REPO} ${FLUTTER_PRODUCT_Name} -b ${PROJECT_GIT_BRANCH}
+git clone ${FLUTTER_PRODUCT_GIT_REPO} ${FLUTTER_PRODUCT_Name} -b ${PROJECT_GIT_BRANCH}
 fi
 
 cd ${WORKSPACE}/${FLUTTER_PRODUCT_Name}
@@ -107,45 +106,45 @@ Flutter提供了FlutterMethodChannel实现了Flutter调用原生方法的功能�
 //native中
 FlutterViewController* flutterViewController = [[FlutterViewController alloc] initWithProject:nil nibName:nil bundle:nil];
 [flutterViewController setInitialRoute:@"myApp"];
- __weak __typeof(self) weakSelf = self;
+__weak __typeof(self) weakSelf = self;
 // 要与main.dart中一致
 NSString *channelName = @"com.pages.your/native_get";
 FlutterMethodChannel *messageChannel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:flutterViewController];
-    [messageChannel setMethodCallHandler:^(FlutterMethodCall * _Nonnull call, FlutterResult  _Nonnull result) {
-    if ([call.method isEqualToString:@"iOSFlutter"]) {
-            TargetViewController *vc = [[TargetViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
-            if (result) {
-                result(@"返回给flutter的内容");
-            }
-        }
+[messageChannel setMethodCallHandler:^(FlutterMethodCall * _Nonnull call, FlutterResult  _Nonnull result) {
+if ([call.method isEqualToString:@"iOSFlutter"]) {
+TargetViewController *vc = [[TargetViewController alloc] init];
+[self.navigationController pushViewController:vc animated:YES];
+if (result) {
+result(@"返回给flutter的内容");
+}
+}
 }];
 
 //flutter中
 // 创建一个给native的channel
 static const methodChannel = const MethodChannel('com.pages.your/native_get');
 _iOSPushToVC() async {
-    dynamic result;
-    result = await methodChannel.invokeMethod('iOSFlutter', '参数');
-  }
+dynamic result;
+result = await methodChannel.invokeMethod('iOSFlutter', '参数');
+}
 
 ```
 #####2.原生调用Flutter
 Flutter提供了FlutterEventChannel来完成原生调用Flutter
 ```
 // native中
- FlutterEventChannel *evenChannal = [FlutterEventChannel eventChannelWithName:channelName binaryMessenger:flutterViewController];
+FlutterEventChannel *evenChannal = [FlutterEventChannel eventChannelWithName:channelName binaryMessenger:flutterViewController];
 // 代理FlutterStreamHandler
 [evenChannal setStreamHandler:self];
 #pragma mark - <FlutterStreamHandler>
 // 这个onListen是Flutter端开始监听这个channel时的回调，第二个参数 EventSink是用来传数据的载体。
 - (FlutterError* _Nullable)onListenWithArguments:(id _Nullable)arguments
 eventSink:(FlutterEventSink)events {
-    // arguments flutter给native的参数
-    if (events) {
-        events(@"push传值给flutter的vc");
-    }
-    return nil;
+// arguments flutter给native的参数
+if (events) {
+events(@"push传值给flutter的vc");
+}
+return nil;
 }
 
 // flutter中
@@ -156,27 +155,28 @@ eventChannel.receiveBroadcastStream(12345).listen(_onEvent,onError: _onError);
 String naviTitle = 'title' ;
 // 回调事件
 void _onEvent(Object event) {
-  setState(() {
-    naviTitle =  event.toString();
-  });
+setState(() {
+naviTitle =  event.toString();
+});
 }
 ```
 #####3.总结
 以上就是官方提供的混合开发方案了，这个方案有一个巨大的缺点，就是在原生和Flutter页面叠加跳转时内存不断增大，因为FlutterView和FlutterViewController每次跳转都会新建一个对象，创建的Flutter页面越多内存就会暴增，尤其是在iOS上还有内存泄露的问题。
 ####flutter_boost混合方案
 #####1.简介
-![](https://user-gold-cdn.xitu.io/2019/10/17/16dd842a5661a0ff?w=1031&h=623&f=png&s=23073)
+![1552968436255-e781d85b-cc08-4dad-8267-a4bb94c7229c.png](https://upload-images.jianshu.io/upload_images/680706-c8e882f41dd0064d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 我们可以这样简单去理解这个方案：我们把共享的`Flutter View`当成一个画布，然后用一个`Native`的容器作为逻辑的页面。每次在打开一个容器的时候我们通过通信机制通知`Flutter View`绘制成当前的逻辑页面，然后将Flutter View放到当前容器里面。
 
 页面栈完全由原生控制，每一个`flutter`页面对应一个原生容器（`ViewController`和`Activity`），原生端创建`FlutterRouter`实现`FLBPlatform`中的接口，flutter和原生的相互调用都会执行`FlutterRouter`中的`openPage`接口。代码如下：
 ```
 // iOS: FlutterRouter
 - (void)openPage:(NSString *)name params:(NSDictionary *)params animated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-    [ACRouter openWithURLString:name userInfo:params completion:^(ACRouterOutModel * _Nonnull outModel) {
-        [FlutterBoostPlugin.sharedInstance onResultForKey:[params objectForKey:requestIdKey] resultData:outModel.data params:@{}];
-        if(completion) completion(YES);
-    }];
- 
+[ACRouter openWithURLString:name userInfo:params completion:^(ACRouterOutModel * _Nonnull outModel) {
+[FlutterBoostPlugin.sharedInstance onResultForKey:[params objectForKey:requestIdKey] resultData:outModel.data params:@{}];
+if(completion) completion(YES);
+}];
+
 }
 ```
 flutter端建立`ACRouter`封装`flutterboost`，flutter跳转原生页面直接调用原生项目中的路由
@@ -184,42 +184,42 @@ flutter端建立`ACRouter`封装`flutterboost`，flutter跳转原生页面直接
 // flutter中:
 // 传递协议名和页面所需初始化参数
 ACRouter.openUrl("mizlicai://product/normalProductDetail", {'serial': 'PI_11221'},
-                    routeCallback: (Map<dynamic, dynamic> result) {
-              // 处理回调结果
-              print("did recieve second route result $result");
- });
+routeCallback: (Map<dynamic, dynamic> result) {
+// 处理回调结果
+print("did recieve second route result $result");
+});
 
 // Native中：
 // TODO:普通产品详情
-    [ACRouter registerWithURLString:@"mizlicai://product/normalProductDetail" handler:^(NSDictionary * _Nullable paramsIn) {
-        ProductDetailViewController *vc = [[ProductDetailViewController alloc] init];
-        vc.serial = [paramsIn valueForKey:@"serial"];
-        vc.origin = [paramsIn valueForKey:@"origin"];
-        [[UIViewController mz_topController].navigationController pushViewController:vc animated:YES];
-    }];
+[ACRouter registerWithURLString:@"mizlicai://product/normalProductDetail" handler:^(NSDictionary * _Nullable paramsIn) {
+ProductDetailViewController *vc = [[ProductDetailViewController alloc] init];
+vc.serial = [paramsIn valueForKey:@"serial"];
+vc.origin = [paramsIn valueForKey:@"origin"];
+[[UIViewController mz_topController].navigationController pushViewController:vc animated:YES];
+}];
 ```
 flutter端和原生打开flutter页面
 ```
 // 原生中
- [ACRouter registerWithURLString:@"mizlicai://flutter/open" handler:^(NSDictionary * _Nullable paramsIn) {
- NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:paramsIn[@"params"]];
- 
- FLBFlutterViewContainer *vc = FLBFlutterViewContainer.new;
- [vc setName:paramsIn[@"pageName"] params:params];
- [[UIViewController mz_topController].navigationController pushViewController:vc animated:animated];
- ACRouterCompletionBlock action = paramsIn[ACRouterParameterCompletion];
+[ACRouter registerWithURLString:@"mizlicai://flutter/open" handler:^(NSDictionary * _Nullable paramsIn) {
+NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:paramsIn[@"params"]];
+
+FLBFlutterViewContainer *vc = FLBFlutterViewContainer.new;
+[vc setName:paramsIn[@"pageName"] params:params];
+[[UIViewController mz_topController].navigationController pushViewController:vc animated:animated];
+ACRouterCompletionBlock action = paramsIn[ACRouterParameterCompletion];
 if (action) {
-     ACRouterOutModel *outModel = [[ACRouterOutModel alloc] init];
-     action(outModel);
- }
- }];
+ACRouterOutModel *outModel = [[ACRouterOutModel alloc] init];
+action(outModel);
+}
+}];
 
 //flutter中
 ACRouter.openUrl("mizlicai://flutter/open", {'pageName': 'userCenter','params':{},
-                    routeCallback: (Map<dynamic, dynamic> result) {
-              // 处理回调结果
-              print("did recieve second route result $result");
- });
+routeCallback: (Map<dynamic, dynamic> result) {
+// 处理回调结果
+print("did recieve second route result $result");
+});
 ```
 #####2.协议支持
 flutter可以调用原生项目组件化的路由协议([米庄iOS路由协议](http://wiki.aicaigroup.work/pages/viewpage.action?pageId=21631190))，来跳转原生页面、调用原生接口等。
@@ -228,32 +228,32 @@ flutter可以调用原生项目组件化的路由协议([米庄iOS路由协议](
 ```
 // main.dart
 if (ApiClient.isProduction) {
-      ApiClient.request = RealRequest();
-    } else {
-      ApiClient.request = MockRequest();
-  }
+ApiClient.request = RealRequest();
+} else {
+ApiClient.request = MockRequest();
+}
 ```
 MockRequest和RealRequest分别实现父类send方法，RealRequest通过ACRouter调用原生发起网络请求，MockRequest解析本地json
 ```
 // 发起请求
 ApiClient.request.send(Api.userCenter, HttpRequest.GET, {},
-                    (Map response) {           
-                });
+(Map response) {           
+});
 // RealRequest
 void send(String url, String requestType, Map param, Function callback) {
-    param.addAll({'url': url, 'requestType': requestType});
-    ACRouter.openUrl(RouteCst.httpFlutterRequest, param,
-        routeCallback: (Map<dynamic, dynamic> result) {
-      callback(result);
-    });
-  }
- 
+param.addAll({'url': url, 'requestType': requestType});
+ACRouter.openUrl(RouteCst.httpFlutterRequest, param,
+routeCallback: (Map<dynamic, dynamic> result) {
+callback(result);
+});
+}
+
 // MockRequest
 void send(String url, String requestType, Map param, Function callback) {
-    dynamic responseJson =
-        MockRequest.mock(action: getJsonName(url), param: param);
-    callback(responseJson);
-  }
+dynamic responseJson =
+MockRequest.mock(action: getJsonName(url), param: param);
+callback(responseJson);
+}
 ```
 #####4.页面导航
 Flutter页面栈由原生控制，使用自己的导航栏。关闭不同页面的方法
@@ -262,9 +262,9 @@ Flutter页面栈由原生控制，使用自己的导航栏。关闭不同页面�
 static Future<bool> closeCurPage()
 // 返回到特定页面，使用openUrl交互
 ACRouter.openUrl('mizlicai://product/closeToRoot', param,
-        routeCallback: (Map<dynamic, dynamic> result) {
-      callback(result);
-    });
+routeCallback: (Map<dynamic, dynamic> result) {
+callback(result);
+});
 ```
 #####5.原生接入
 在`Podfile`中添加配置，可以切换本地，远程，debug等环境
@@ -298,10 +298,10 @@ AppDelegate中，初始化`flutterboost`，传入`FlutterRouter`
 #import "FlutterRouter.h"
 - (void)startFlutter {
 
-    [FlutterBoostPlugin.sharedInstance startFlutterWithPlatform:[FlutterRouter sharedRouter]
+[FlutterBoostPlugin.sharedInstance startFlutterWithPlatform:[FlutterRouter sharedRouter]
 
-                                                        onStart:^(FlutterViewController *fvc) {
-                                                        }];
+onStart:^(FlutterViewController *fvc) {
+}];
 
 }
 ```
