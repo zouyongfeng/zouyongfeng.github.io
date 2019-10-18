@@ -1,16 +1,10 @@
 
 
-![Flutter](https://titanjun.oss-cn-hangzhou.aliyuncs.com/flutter/flutter_layout.png?x-oss-process=style/titanjun)
-
-
-
 <!--more-->
 
 
-- 相关博客系列文章: [Flutter和Dart系列文章](https://www.titanjun.top/categories/Flutter%E7%AC%94%E8%AE%B0/)
-- 相关`Demo`地址: [GitHub地址](https://github.com/CoderTitan/Flutter_Widget)
 - 布局类`Widget`都会包含一个或多个子`widget`，不同的布局类`Widget`对子`widget`排版(`layout`)方式不同
-- [上一篇文章](https://www.titanjun.top/Flutter%E4%B9%8BText%E5%92%8CImage.html)中提到: `Widget`实际上就是`Element`的配置数据, `Widget`的功能是描述一个`UI`元素的一个配置数据, 而真正的`UI`渲染是由`Element`构成
+-  `Widget`实际上就是`Element`的配置数据, `Widget`的功能是描述一个`UI`元素的一个配置数据, 而真正的`UI`渲染是由`Element`构成
 - 在`Flutter`中，根据`Widget`是否需要包含子节点将`Widget`分为了三类，分别对应三种`Element`，如下表
 
 

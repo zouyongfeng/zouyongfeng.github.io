@@ -1,10 +1,4 @@
 
-
-![image](https://titanjun.oss-cn-hangzhou.aliyuncs.com/flutter/flutter_appbar.png)
-
-
-<!--more-->
-
 - `Flutter`一切皆`Widget`的核心思想, 为我们提供了两种主题风格
 - `CupertinoApp`: 一个封装了很多`iOS`风格的小部件，一般作为顶层`widget`使用
 - `MaterialApp`: 一个封装了很多安卓风格的小部件，一般作为顶层`widget`使用, 下面我们先看下这个`Widget`

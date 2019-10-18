@@ -1,19 +1,16 @@
 
 
-![Flutter](https://titanjun.oss-cn-hangzhou.aliyuncs.com/flutter/widget_base.png?x-oss-process=style/titanjun)
-
 
 
 <!--more-->
 
 
-- [Flutter和Dart系列文章](https://www.titanjun.top/categories/Flutter%E7%AC%94%E8%AE%B0/)
-- [项目GitHub地址](https://github.com/CoderTitan/Flutter_Widget)
+
 - `Flutter`作为一种全新的响应式，跨平台，高性能, 完全免费、开源的移动开发框架
 - `Widget`是`Flutter`开发中的主要组成部分, 是`Flutter`的基础, `Flutter`的核心设计思想便是: 一切皆`Widget`
 - `Flutter`中的`widget`的概念更广泛，它不仅可以表示`UI`元素，也可以表示一些功能性的组件如：用于手势检测的 `GestureDetector` `widget`、用于应用主题数据传递的`Theme`等等
 
-![Flutter框架](https://titanjun.oss-cn-hangzhou.aliyuncs.com/flutter/WidgetWork.png?x-oss-process=style/titanjun)
+![Flutter框架](https://titanjun.oss-cn-hangzhou.aliyuncs.com/flutter/WidgetWork.png?x-oss-process=style/zouyf)
 
 
 ## Widget与Element
